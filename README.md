@@ -46,3 +46,16 @@ curl -k -u admin:<YOUR_PASSWORD>https://localhost:9200
 * [ ] **Phase 3:** Deploy ML-based anomaly detection for "Slow and Low" network scans.
 * [ ] **Phase 4:** Integrate LangGraph AI Agent for autonomous alert investigation.
 
+## 6. Proof of Deployment (Phase 1)
+
+### A. Container Health (Docker)
+All microservices are running in a health state with strict memory limits.
+![Docker Status](./docs/screenshots/docker_ps.png)
+
+### B. Indexer API Verification
+Secure communication with the Wazuh Indexer verified via authenticated CLI.
+![Indexer Verification](./docs/screenshots/indexer_verify.png)
+
+### C. Live Security Dashboard
+The Web UI is fully operational, showing active event monitoring.
+![Wazuh Dashboard](./docs/screenshots/dashboard.png)
