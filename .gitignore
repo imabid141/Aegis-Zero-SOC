@@ -1,0 +1,16 @@
+# Ignore sensitive seurity certificates
+**/wazuh_indexer_ssl_certs/*
+**/*.pem
+**/*.key
+**/certs.yml
+
+# Ignore data volumes and logs
+**/data/*
+**/*.log
+**/wazuh-indexer-data/*
+
+# Ignore environment secrets and system files
+.env
+.DS_Store
+**/*.backup*
+
