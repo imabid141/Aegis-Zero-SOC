@@ -37,7 +37,7 @@ In this phase, I deployed a fully functional **Wazuh SIEM** stack (Indexer, Mana
 docker compose ps
 
 # Verify Indexer Authentication
-curl -k -u admin:<YOUR_PASSWORD>https://localhost:9200
+curl -k -u admin:<YOUR_PASSWORD> https://localhost:9200
 ```
 
 ## 5. Next Milestones
