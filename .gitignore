@@ -1,5 +1,4 @@
 # Ignore sensitive seurity certificates
-**/wazuh_indexer_ssl_certs/*
 **/*.pem
 **/*.key
 **/certs.yml
