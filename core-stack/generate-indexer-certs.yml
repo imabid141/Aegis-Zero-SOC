@@ -7,5 +7,4 @@ services:
       - CERT_TOOL_VERSION=4.14
     volumes:
       - ./config/wazuh_indexer_ssl_certs/:/certificates/
-#      - ./certs.yml:/config/certs.yml
       - ./config/certs.yml:/config/certs.yml
