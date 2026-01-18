@@ -41,14 +41,60 @@ In this phase, I deployed a fully functional **Wazuh SIEM** stack (Indexer, Mana
 | **Wazuh Manager** | Analysis & Rule Engine | 2.0 GB | Healthy |
 | **Wazuh Dashboard**| UI & Visualization | 2.0 GB | Healthy |
 
-## 4. How to Verify
+## 4. Deployment Guide (Zero to Operational)
+
+Follow these exact steps to deploy the Aegis-Zero stack on a fresh Linux host (Ubuntu/Kali).
+
+### Step 1: Clone and Navigate
 
 ```bash
-# Verify all services are running
-docker compose ps
+git clone https://github.com/imabid141/Aegis-Zero-SOC.git
+cd Aegis-Zero-SOC/core-stack
 
-# Verify Indexer Authentication
-curl -k -u admin:<YOUR_PASSWORD> https://localhost:9200
+```
+
+### Step 2: Optimize Linux Kernel (Required for Indexer)
+
+The Wazuh Indexer (OpenSearch) requires the host's memory map limits to be increased, or the container will fail to start.
+
+```bash
+# Set limit for the current session
+sudo sysctl -w vm.max_map_count=262144
+
+# Make the change permanent across reboots
+echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
+
+```
+
+### Step 3: Generate Security Certificates
+
+Initialize the SSL/TLS certificates for secure communication between the Indexer, Manager, and Dashboard.
+
+```bash
+docker compose -f generate-indexer-certs.yml run --rm generator
+
+```
+
+### Step 4: Launch the Microservices
+
+Start the stack in detached mode.
+
+```bash
+docker compose up -d
+
+```
+
+### Step 5: Verification
+
+Wait approximately 30 seconds (first time it took few mints) for the Java engine to initialize, then verify the cluster health:
+
+```bash
+# Check container status
+docker ps
+
+# Verify Indexer API Authentication
+curl -k -u admin:SecretPassword https://localhost:9200
+
 ```
 
 ## 5. Next Milestones
