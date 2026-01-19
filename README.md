@@ -162,3 +162,8 @@ Proves Wazuh correctly categorized and leveled the alert.
 
 Shows the SIEM can identify specific unauthorized tools.
 ![DHCP Alert](./docs/screenshots/kali_dhcp_alert.png)
+
+**5. Fifth Screenshot (Indexing Proof)**
+
+Proves the stack handles concurrent events without loss.
+![25 Hits Spike](./docs/screenshots/indexing_spike.png)
