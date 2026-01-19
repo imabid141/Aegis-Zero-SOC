@@ -1,16 +1,41 @@
-![Status](https://img.shields.io/badge/Status-Phase_1_Complete-green?style=for-the-badge&logo=checkmarx)
+![Status](https://img.shields.io/badge/Status-Phase_2_Complete-brightgreen?style=for-the-badge&logo=checkmarx)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge&logo=opensourceinitiative)
 ![Platform](https://img.shields.io/badge/Platform-Docker-blue?style=for-the-badge&logo=docker)
 ![Role](https://img.shields.io/badge/Role-SOC_Engineering-red?style=for-the-badge&logo=kali-linux)
 
 # Project Aegis-Zero: Autonomous Agentic SOC
 
-## Phase 1: High-Efficiency SIEM Foundation
+## Phase 2: Integrated NIDS & SIEM Intelligence
 
 **Author:** Ghulam Muhammad  
-**Status:** Phase 1 (Core Infrastructure) Complete  
-**Architecture:** Containerized Microservices  
+**Status:** Phase 2 (Network Intrusion Detection) Complete ✅  
+**Architecture:** Containerized Microservices / Shared-Volume Bridge  
 **Hardware Target:** Low-Resource Local Hardware (16GB RAM / 4-Core CPU)
+
+## 🚀 Executive Summary
+
+Aegis-Zero is a high-performance, containerized SOC stack. It bridges the gap between **Network Intelligence (NIDS)** and **Log Orchestration (SIEM)** using a custom-engineered "Shared-Volume Bridge" architecture. This setup allows for sub-second detection-to-alert latency on consumer-grade hardware.
+
+## 🏗️ Technical Architecture (Current State)
+
+The system operates as a unified data pipeline:
+
+1. **Suricata (NIDS):** Inspects raw traffic on `wlan0` using `AF_PACKET`.
+2. **The Bridge:** High-speed log shipping via Docker volume mapping of `eve.json`.
+3. **Wazuh (SIEM):** The central brain performing log correlation and indexing.
+
+```mermaid
+graph LR
+    Traffic((Network Traffic)) --> Suricata[Suricata NIDS]
+    Suricata -- "Shared JSON Bridge" --> Wazuh[Wazuh Manager]
+    Wazuh --> Indexer[(Indexer)]
+    Indexer --> Dashboard[Dashboard]
+
+    style Suricata fill:#f96,stroke:#333
+    style Wazuh fill:#69f,stroke:#333
+    style Dashboard fill:#9f9,stroke:#333
+
+```
 
 ---
 
@@ -22,24 +47,31 @@ Modern Security Operations Centers (SOCs) face "Alert Fatigue" and high infrastr
 2. **Resource-Efficient:** Custom-tuned to run on consumer-grade hardware.
 3. **Autonomous:** Future phases include LangGraph AI Agents for automated triage.
 
-## 2. Technical Achievement (Phase 1)
+## 2. Technical Achievements
 
-In this phase, I deployed a fully functional **Wazuh SIEM** stack (Indexer, Manager, and Dashboard) using Docker.
+### Phase 1: High-Efficiency SIEM Foundation
 
-### Key Engineering Challenges Overcome
-
-* **Memory Optimization:** Successfully tuned the Wazuh Indexer (Java-based OpenSearch) from the standard 4GB allocation down to **1.5GB (Xms1500m/Xmx1500m)**. This ensures stability on a 16GB host while leaving overhead for upcoming AI modules.
+* **Memory Optimization:** Successfully tuned the Wazuh Indexer (Java-based OpenSearch) from the standard 4GB allocation down to **1.5GB (Xms1500m/Xmx1500m)**. This ensures stability on a 16GB host.
 * **Security Hardening:** Implemented full TLS/SSL certificate-based communication between all microservices using a custom Certificate Authority (CA).
-* **Docker Orchestration:** Utilized Docker Compose with hard resource limits (`deploy: resources: limits`) to prevent system-wide crashes during log spikes.
+* **Docker Orchestration:** Utilized Docker Compose with hard resource limits (`deploy: resources: limits`) to prevent system-wide crashes.
 * **Kernel Tuning:** Optimized Linux host kernel parameters (`vm.max_map_count`) to support high-performance indexing.
+
+### Phase 2: NIDS & Network Intelligence (Current Achievement)
+
+* **Shared-Volume Bridge:** Engineered a high-speed data pipeline mapping Suricata's `eve.json` directly into the Wazuh Manager via Docker volumes.
+* **Deep Packet Inspection:** Deployed Suricata with `CAP_NET_ADMIN` to monitor the host `wlan0` interface, enabling signature-based threat detection.
+* **Live Detection Validated:** Confirmed 100% indexing accuracy for:
+* **GPL ATTACK_RESPONSE:** Identified via simulated Web Attack (testmyids.com).
+* **Behavioral Analysis:** Identification of Kali Linux hostname signatures in DHCP packets.
 
 ## 3. The Stack
 
 | Service | Role | Memory Limit | Status |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
+| **Suricata** | Network IDS | 1.0 GB | Healthy |
 | **Wazuh Indexer** | Log Storage & Search | 2.0 GB | Healthy |
 | **Wazuh Manager** | Analysis & Rule Engine | 2.0 GB | Healthy |
-| **Wazuh Dashboard**| UI & Visualization | 2.0 GB | Healthy |
+| **Wazuh Dashboard** | UI & Visualization | 2.0 GB | Healthy |
 
 ## 4. Deployment Guide (Zero to Operational)
 
@@ -49,11 +81,12 @@ Follow these exact steps to deploy the Aegis-Zero stack on a fresh Linux host (U
 
 ```bash
 git clone https://github.com/imabid141/Aegis-Zero-SOC.git
+
 cd Aegis-Zero-SOC/core-stack
 
 ```
 
-### Step 2: Optimize Linux Kernel (Required for Indexer)
+### Step 2: Optimize Linux Kernel (Required for Wazuh indexer)
 
 The Wazuh Indexer (OpenSearch) requires the host's memory map limits to be increased, or the container will fail to start.
 
@@ -86,7 +119,7 @@ docker compose up -d
 
 ### Step 5: Verification
 
-Wait approximately 30 seconds (first time it took few mints) for the Java engine to initialize, then verify the cluster health:
+Wait approximately 30 seconds (first time it took few mints) for the Java engine to initialize, then verify the cluster health.
 
 ```bash
 # Check container status
@@ -99,23 +132,7 @@ curl -k -u admin:SecretPassword https://localhost:9200
 
 ## 5. Next Milestones
 
-* [ ] **Phase 2:** Integrate Suricata for Network Intrusion Detection (NIDS).
+* [x] **Phase 1:** High-Efficiency SIEM Foundation. ✅
+* [x] **Phase 2:** Integrate Suricata for Network Intrusion Detection (NIDS). ✅
 * [ ] **Phase 3:** Deploy ML-based anomaly detection for "Slow and Low" network scans.
-* [ ] **Phase 4:** Integrate LangGraph AI Agent for autonomous alert investigation.
-
-## 6. Proof of Deployment (Phase 1)
-
-### A. Container Health (Docker)
-
-All microservices are running in a health state with strict memory limits.
-![Docker Status](./docs/screenshots/docker_ps.png)
-
-### B. Indexer API Verification
-
-Secure communication with the Wazuh Indexer verified via authenticated CLI.
-![Indexer Verification](./docs/screenshots/indexer_verify.png)
-
-### C. Live Security Dashboard
-
-The Web UI is fully operational, showing active event monitoring.
-![Wazuh Dashboard](./docs/screenshots/dashboard.png)
+* [ ] **Phase 4:** Integrate LangGraph AI Agent for automated alert investigation.
