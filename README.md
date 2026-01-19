@@ -152,3 +152,8 @@ Proves the sensor is capturing live traffic.
 
 Proves the data pipeline successfully moved the log.
 ![Wazuh Manager](./docs/screenshots/manager_raw.png)
+
+**3. Third Screenshot (Rule Mapping)**
+
+Proves Wazuh correctly categorized and leveled the alert.
+![Source View](./docs/screenshots/wazuh_source_view.png)
