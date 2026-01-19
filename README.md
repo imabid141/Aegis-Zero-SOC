@@ -167,3 +167,21 @@ Shows the SIEM can identify specific unauthorized tools.
 
 Proves the stack handles concurrent events without loss.
 ![25 Hits Spike](./docs/screenshots/indexing_spike.png)
+
+### B. Phase 1: Core SIEM Verification
+
+* **Indexer API:**
+
+Secure communication verified via authenticated CLI.
+
+![Indexer Verification](./docs/screenshots/indexer_verify1.png)
+
+**Initial Deployment:**
+
+First-run dashboard stability confirmed.
+![Wazuh Dashboard](./docs/screenshots/dashboard.png)
+
+### C. System Infrastructure (Docker)
+
+All microservices (Suricata + Wazuh Stack) are running in a healthy state with strict memory limits enforced.
+![Docker Status](./docs/screenshots/docker_ps1.png)
