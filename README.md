@@ -157,3 +157,8 @@ Proves the data pipeline successfully moved the log.
 
 Proves Wazuh correctly categorized and leveled the alert.
 ![Source View](./docs/screenshots/wazuh_source_view.png)
+
+**4. Fourth Screenshot (Kali Detection)**
+
+Shows the SIEM can identify specific unauthorized tools.
+![DHCP Alert](./docs/screenshots/kali_dhcp_alert.png)
