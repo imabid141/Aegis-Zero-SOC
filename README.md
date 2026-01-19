@@ -147,3 +147,8 @@ I have verified the end-to-end data pipeline by correlating raw NIDS events with
 
 Proves the sensor is capturing live traffic.
 ![Suricata Raw](./docs/screenshots/suricata_raw.png)
+
+**2. Second Screenshot (Pipeline Proof)**
+
+Proves the data pipeline successfully moved the log.
+![Wazuh Manager](./docs/screenshots/manager_raw.png)
