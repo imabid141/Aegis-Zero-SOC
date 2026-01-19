@@ -136,3 +136,14 @@ curl -k -u admin:SecretPassword https://localhost:9200
 * [x] **Phase 2:** Integrate Suricata for Network Intrusion Detection (NIDS). ✅
 * [ ] **Phase 3:** Deploy ML-based anomaly detection for "Slow and Low" network scans.
 * [ ] **Phase 4:** Integrate LangGraph AI Agent for automated alert investigation.
+
+## 6. Proof of Work
+
+### A. Phase 2: NIDS-to-SIEM Pipeline Validation
+
+I have verified the end-to-end data pipeline by correlating raw NIDS events with normalized SIEM alerts. The system currently maintains a **100% indexing rate** with 25 active hits in the current session.
+
+**1. First Screenshot (Raw Suricata)**
+
+Proves the sensor is capturing live traffic.
+![Suricata Raw](./docs/screenshots/suricata_raw.png)
