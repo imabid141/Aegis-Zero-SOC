@@ -13,3 +13,7 @@
 .DS_Store
 **/*.backup*
 
+# Some archiev
+1st_README.md
+
+core-stack/logs/*
